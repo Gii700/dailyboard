@@ -1,0 +1,418 @@
+/* =========================================================================
+   1. VARIABEL WARNA BARU & RESET DASAR (TEMA MODERN NEON)
+   ========================================================================= */
+:root {
+  /* Mode Terang: Bersih dengan Aksen Teal Lembut */
+  --bg-utama: #f4f7f6;
+  --bg-kartu: #ffffff;
+  --teks-utama: #1a202c;
+  --teks-sekunder: #4a5568;
+  --aksen: #bababa;
+  --aksen-terang: #e0f2fe;
+  --merah-hapus: #fee2e2;
+  --merah-teks: #ef4444;
+  --garis-tebal: #e2e8f0;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode {
+  /* Mode Gelap: Hitam Pekat dengan Aksen Neon Teal & Ungu */
+  --bg-utama: #0b0f19;
+  --bg-kartu: #151d30;
+  --teks-utama: #f8fafc;
+  --teks-sekunder: #94a3b8;
+  --aksen: #bababa;
+  --aksen-terang: rgba(56, 189, 248, 0.15);
+  --merah-hapus: rgba(239, 68, 68, 0.2);
+  --merah-teks: #f87171;
+  --garis-tebal: #22314d;
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* PERBAIKAN: Padding atas ditambah agar kotak turun di bawah logo DailyBoard latar belakang */
+body {
+  background-color: var(--bg-utama);
+  color: var(--teks-utama);
+  padding: 140px 40px 40px 40px; 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* PERBAIKAN: Mengubah ukuran kontainer menjadi lanskap lebar (max-width: 1200px) */
+#app {
+  max-width: 1200px; 
+  width: 100%;
+  background: var(--bg-kartu);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--garis-tebal);
+}
+
+/* PERBAIKAN: Grid System untuk membagi layout menjadi bentuk Lanskap Kolom Samping-Sampingan */
+@media (min-width: 850px) {
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Membagi menjadi 2 kolom seimbang */
+    gap: 30px;
+    align-items: start;
+  }
+  
+  h2 {
+    grid-column: span 2; /* Judul selamat datang tetap penuh di atas baris pertama */
+    margin-bottom: 10px;
+  }
+  
+  #cuaca-section {
+    grid-column: span 2; /* Seksi cuaca diletakkan melebar penuh di baris paling bawah */
+  }
+}
+
+/* Judul Utama Rata Kiri Bersih */
+h2 {
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--aksen);
+  letter-spacing: -0.5px;
+}
+
+/* Menghilangkan sisa manipulasi ::after agar bersih */
+h2::after {
+  display: none !important;
+  content: "" !important;
+}
+
+/* Judul Setiap Komponen Seksi */
+h3 {
+  font-size: 14px;
+  margin-bottom: 18px;
+  color: var(--teks-sekunder);
+  border-bottom: 2px solid var(--garis-tebal);
+  padding-bottom: 66px;
+  padding-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* Kotak Pembungkus Setiap Seksi Komponen */
+section {
+  margin-bottom: 20px;
+  padding: 22px;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.01);
+  border: 1px solid var(--garis-tebal);
+}
+
+body.dark-mode section {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+
+/* =========================================================================
+   2. ELEMEN INPUT DAN TOMBOL GLOBAL
+   ========================================================================= */
+input[type="text"], textarea, input:not([type="button"]):not([type="submit"]) {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--garis-tebal);
+  border-radius: 8px;
+  background-color: var(--bg-utama);
+  color: var(--teks-utama);
+  font-size: 14px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--aksen);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--aksen-terang);
+  color: var(--aksen);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Tombol Aksi Utama di dalam Seksi agar Melebar */
+#tugas-section > button, #catatan-section > button, #cuaca-section > button {
+  width: 100%;
+  margin-bottom: 15px;
+  background-color: var(--aksen);
+  color: var(--bg-kartu);
+}
+
+#tugas-section > button:hover, #catatan-section > button:hover, #cuaca-section > button:hover {
+  filter: brightness(1.1);
+}
+
+
+/* =========================================================================
+   3. DESAIN TO-DO LIST / DAFTAR TUGAS (FASE 2)
+   ========================================================================= */
+#cari-tugas {
+  margin-bottom: 15px;
+}
+
+#filter-container {
+  display: flex;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+#filter-container button {
+  flex: 1;
+  padding: 8px;
+  font-size: 13px;
+  background-color: var(--bg-utama);
+  color: var(--teks-sekunder);
+  border: 1px solid var(--garis-tebal);
+}
+
+#filter-container button:hover {
+  border-color: var(--aksen);
+  color: var(--aksen);
+}
+
+#daftar-tugas {
+  list-style: none;
+  margin-top: 15px;
+}
+
+#daftar-tugas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  background-color: var(--bg-kartu);
+  border: 1px solid var(--garis-tebal);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: grab;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+
+#daftar-tugas li.dragging {
+  opacity: 0.4;
+  border: 2px dashed var(--aksen);
+  background-color: var(--bg-utama);
+  cursor: grabbing;
+}
+
+#daftar-tugas li span {
+  flex-grow: 1;
+  margin-right: 15px;
+  word-break: break-all;
+  font-size: 15px;
+}
+
+#daftar-tugas li button {
+  background-color: var(--merah-hapus);
+  color: var(--merah-teks);
+  padding: 6px 12px;
+  font-size: 12px;
+  width: auto;
+}
+
+
+/* =========================================================================
+   4. DESAIN CATATAN CEPAT / NOTES (FASE 3)
+   ========================================================================= */
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+.catatan-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.catatan-item {
+  background-color: var(--bg-kartu);
+  border: 1px solid var(--garis-tebal);
+  border-radius: 10px;
+  padding: 16px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+
+.catatan-item p {
+  font-size: 14px;
+  margin-bottom: 18px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.catatan-item small {
+  color: var(--teks-sekunder);
+  font-size: 11px;
+  display: block;
+  font-weight: 500;
+}
+
+.catatan-item button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  color: var(--teks-sekunder);
+  padding: 0 5px;
+  font-size: 16px;
+  font-weight: bold;
+  width: auto;
+}
+
+.catatan-item button:hover {
+  color: var(--merah-teks);
+  background: transparent;
+  transform: none;
+}
+
+
+/* =========================================================================
+   5. DESAIN WIDGET CUACA & KUTIPAN (FASE 4)
+   ========================================================================= */
+#status {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--teks-sekunder);
+  margin-bottom: 14px;
+}
+
+#kutipan-harian {
+  font-style: italic;
+  font-size: 14px;
+  border-left: 4px solid var(--aksen);
+  padding-left: 14px;
+  margin: 15px 0 25px 0;
+  color: var(--teks-utama);
+  line-height: 1.6;
+}
+
+#info-cuaca {
+  margin-top: 15px;
+  padding: 16px;
+  background-color: var(--bg-utama);
+  border: 1px solid var(--garis-tebal);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#info-cuaca p {
+  margin: 0;
+}
+
+
+/* =========================================================================
+   6. TOMBOL TOGGLE TEMA / DARK MODE (FASE 5)
+   ========================================================================= */
+#toggle-tema {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: var(--bg-kartu);
+  border: 1px solid var(--garis-tebal);
+}
+
+/* =========================================================================
+   PERBAIKAN STRUKTUR TATA LETAK UTAMA (HTML & CONTAINER)
+   ========================================================================= */
+
+body {
+  background-color: var(--bg-utama);
+  color: var(--teks-utama);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column; /* Menyusun Header, Main, dan Footer berurutan ke bawah */
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Mengatur Header HTML (Logo Utama & Tombol Tema) */
+#main-header {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Judul di kiri, tombol di kanan */
+  align-items: center;
+  margin-bottom: 20px; /* Jarak aman ke kotak putih di bawahnya */
+}
+
+/* Mengatur teks logo besar di pojok kiri atas luar kotak */
+#main-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #7a7a7a; /* Sesuaikan warna logo asli Anda */
+  margin: 0;
+}
+
+body.dark-mode #main-header h1 {
+  color: #f8fafc;
+}
+
+/* Kotak Pembungkus Utama Konten (#app) */
+#app {
+  max-width: 1200px; 
+  width: 100%;
+  background: var(--bg-kartu);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--garis-tebal);
+}
+
+/* Mengatur Hak Cipta di bagian paling bawah halaman */
+footer {
+  display: block !important; /* Membatalkan display: none sebelumnya */
+  margin-top: 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--teks-sekunder);
+}
+
+/* =========================================================================
+   PENYESUAIAN TOMBOL TEMA & ELEMEN LAINNYA
+   ========================================================================= */
+
+/* Mengubah tombol tema agar menempel di dalam Header, bukan melayang absolut */
+#toggle-tema {
+  position: static; /* Mengubah dari fixed/absolute agar rapi di dalam header */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background-color: var(--bg-kartu);
+  border: 1px solid var(--garis-tebal);
+}
